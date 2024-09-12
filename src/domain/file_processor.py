@@ -31,17 +31,37 @@ class FileProcessor:
         """
         if file.filename.endswith('.csv'):
             try:
-                csv_reader = csv.DictReader(file.file)
+
+                contents = await file.read()
+                decoded_file = contents.decode("utf-8").splitlines()
+
+                csv_reader = csv.DictReader(decoded_file)
                 for row in csv_reader:
-                    data = {"conta": row[0],
-                            "agencia": row[1],
-                            "texto": row[2],
-                            "valor": float(row[3])}
-                print(data)
+                   
+                    print(row)
                 return {"menssage": f'Arqiuvo {file.filename} processado com sucesso'}
             except Exception as e:
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                                    detail='Falha ao precessar')
+                                    detail=f'Falha ao precessar: {str(e)}')
         else:
             raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE, 
                                 detail="apenas csv.")
+        
+
+    async def add_data_to_file(self, data: dict):
+        """"
+        add dara ro file created
+        :param data: account data history
+        :return: erro success message
+        """
+
+        if os.path.exists(self.file_path):
+            with open(self.file_path, mode = 'a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([data['conta'], data['agencia'], data['texto'], data['valor']])
+                return {'mensagem': f"Dados inserido com sucesso: {data}"}
+            
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                                detail="Arquivo inexistente, por favor acessar"
+                                " a rota de criar arquivo")
