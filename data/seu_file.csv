@@ -1,4 +1,4 @@
-Conta,agencia,texto,valor
+conta,agencia,texto,valor
 1233, 67123,processar, 90.3
 1233, 67123,processar, 90.3
 1233, 67123,processar, 90.3
@@ -17,3 +17,4 @@ Conta,agencia,texto,valor
 1233, 67123,processar, 90.3
 1233, 67123,processar, 90.3
 1233, 67123,processar, 90.3
+54544,54545,TEST,12.9
