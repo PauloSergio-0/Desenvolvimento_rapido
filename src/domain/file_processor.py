@@ -85,6 +85,8 @@ class FileProcessor:
                     valores.append(content) # adcionado a lista
                     
             except FileNotFoundError: # caso não encontre 0 arquivo
-                return {"menssage": "Arquivo não encontrado"}
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
+                                detail="Arquivo inexistente, por favor acessar"
+                                " a rota de criar arquivo")
             
         return valores # retorna a lista "valores" com os dicionarios 
