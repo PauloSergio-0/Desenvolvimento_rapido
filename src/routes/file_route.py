@@ -21,8 +21,9 @@ async def add_data(conta: str, agencia: str, texto: str, valor: float):
     return await FileProcessor().add_data_to_file(data)
 @router.post("/file/delete_data")
 async def delete_data():
-    return {"message": "Dado deletado com sucesso"}
+    return {"menssage": "Dado deletado com sucesso"}
 
 @router.post("/file/list_files")
 async def list_files():
-    return {"message": "Lista de dados"}
+    items = await FileProcessor().list_data_file()
+    return {"menssage": items}
