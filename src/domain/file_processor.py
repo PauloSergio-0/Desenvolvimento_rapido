@@ -6,7 +6,8 @@ from fastapi import HTTPException, UploadFile, status
 class FileProcessor:
     # Manager of files and folders profcessor.
     def __init__(self):
-        self.file_path = 'data/seu_file.csv'
+        self.file_path = 'data/seu_file copy.csv'
+        # self.file_path = 'data/seu_file.csv'
         self.directory = 'data'
 
 
@@ -90,3 +91,17 @@ class FileProcessor:
                                 " a rota de criar arquivo")
             
         return valores # retorna a lista "valores" com os dicionarios 
+
+    async def delete_file(self):
+        if os.path.exists(self.file_path):
+            try:
+                os.remove(self.file_path)
+                return {"menssage": f"O arquivo {self.file_path} foi removido!"}
+            except Exception as e:
+                raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                    detail=f"Arquivo {str(e)} inexistente, por favor acessar"
+                                    " a rota de criar arquivo")
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                                detail="Arquivo inexistente, por favor acessar"
+                                    " a rota de criar arquivo")

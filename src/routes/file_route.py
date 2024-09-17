@@ -8,7 +8,7 @@ router = APIRouter()
 @router.post("/file/create_file")
 async def create_file():
     
-    return FileProcessor().create_file()
+    return  FileProcessor().create_file()
 
 
 @router.post("/upload_file")
@@ -22,7 +22,8 @@ async def add_data(conta: str, agencia: str, texto: str, valor: float):
 
 @router.delete("/file/delete_data")
 async def delete_data():
-    return {"menssage": "Dado deletado com sucesso"}
+    delete_file =  await FileProcessor().delete_file()
+    return {"menssage": delete_file}
 
 @router.post("/file/list_files")
 async def list_files():
