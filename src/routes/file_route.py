@@ -19,7 +19,8 @@ async def upload_file(file: UploadFile = File(...)):
 async def add_data(conta: str, agencia: str, texto: str, valor: float):
     data = {"conta": conta, "agencia": agencia, "texto": texto, "valor": valor}
     return await FileProcessor().add_data_to_file(data)
-@router.post("/file/delete_data")
+
+@router.delete("/file/delete_data")
 async def delete_data():
     return {"menssage": "Dado deletado com sucesso"}
 
