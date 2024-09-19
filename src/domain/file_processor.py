@@ -120,7 +120,7 @@ class FileProcessor:
                     if index != selected_line:
                         file.write(line)
             
-            return {"menssage": "lista deletada"}
+            return {"menssage": "linha deletada"}
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="Arquivo inexistente, por favor acessar"
