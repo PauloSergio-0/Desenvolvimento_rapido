@@ -5,6 +5,11 @@ from domain.file_processor import FileProcessor
 
 router = APIRouter()
 
+
+@router.get('/ola')
+def hello():
+    return {"Menssagem":'Olá'}
+
 @router.post("/file/create_file")
 async def create_file():
     
@@ -22,13 +27,13 @@ async def add_data(conta: str, agencia: str, texto: str, valor: float):
     return await FileProcessor().add_data_to_file(data)
 
 
-@router.delete("/file/delete_data")
-async def delete_data():
-    delete_file =  await FileProcessor().delete_file()
-    return {"menssage": delete_file}
-
-
-@router.post("/file/list_files")
+@router.get("/file/list_files")
 async def list_files():
     items = await FileProcessor().list_data_file()
     return {"menssage": items}
+
+@router.delete("/file/delete_data")
+async def delete_data(select_line: int):
+    # delete_file =  await FileProcessor().delete_file()
+    delete_data = await FileProcessor().delete_data(select_line)
+    return {"menssage": delete_data}

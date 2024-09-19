@@ -6,10 +6,6 @@ import uvicorn
 
 app = FastAPI()
 
-@app.get('/ola')
-def hello():
-    return 'Olá'
-
 init_routes(app)
 
 if __name__ == '__main__':
