@@ -3,12 +3,15 @@ import csv
 
 from fastapi import HTTPException, UploadFile, status
 
+from services.api_client import APIClient
+
 class FileProcessor:
-    # Manager of files and folders profcessor.
+    # Manager of files and folders processor.
+
     def __init__(self):
         self.file_path = 'data/seu_file.csv'
         self.directory = 'data'
-
+        self.api_client = APIClient()
 
     def create_file(self):
         
@@ -37,8 +40,9 @@ class FileProcessor:
 
                 csv_reader = csv.DictReader(decoded_file)
                 for row in csv_reader:
+                    self.api_client.send_data(row)
+
                     
-                    print(row)
                 return {"menssage": f'Arquivo {file.filename} processado com sucesso'}
             except Exception as e:
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
@@ -83,10 +87,10 @@ class FileProcessor:
                     content = {"conta": row[0], "Agencia": row[1], "Texto": row[2], "Valor": row[3]}
                     
                     valores.append(content) # adcionado a lista
-                    
+                return {"detail": "Arquivo processado com sucesso!"}
             except FileNotFoundError: # caso não encontre 0 arquivo
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, 
                                 detail="Arquivo inexistente, por favor acessar"
                                 " a rota de criar arquivo")
             
-        return valores # retorna a lista "valores" com os dicionarios 
+        # return valores # retorna a lista "valores" com os dicionarios 
